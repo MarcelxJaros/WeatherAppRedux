@@ -77,7 +77,7 @@ const DrawerAppBar = (props: Props) => {
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Link to={`/${item}`} style={{ textDecoration: "none", color: "white" }}>
+              <Link key={item} to={`/${item}`} style={{ textDecoration: "none", color: "white" }}>
                 <ColorButton key={item} variant="contained" size="large" sx={{ ml: 1, color: '#fff' }} style={{ outline: "none", border: "none" }}>
                   {item}
                 </ColorButton>

@@ -3,39 +3,19 @@ import DrawerAppBar from './components/NavBar'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './components/Home'
 import About from './components/About'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import thunk from "redux-thunk" 
-import rootReducer from './reducers/rootReducer'
-import { composeWithDevTools } from 'redux-devtools-extension';
 
-// actions
-const increment = () => {
-  return {
-    type: "INCREMENT"
-  }
-}
-const decrement = () => {
-  return {
-    type: "DECREMENT"
-  }
-}
+// declare global {
+//   interface Window {
+//     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+//   }
+// }
 
-// reducer
-
-
-const store = createStore(rootReducer, composeWithDevTools(
-  applyMiddleware(thunk),
-  // other store enhancers if any
-));
-// let store = createStore(rootReducer, applyMiddleware(thunk));
-// let store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-
-// log
-store.subscribe(() => console.log(store))
-
-// dispatch
-store.dispatch(increment)
-
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const store = createStore(rootReducer, composeWithDevTools(
+//   applyMiddleware(thunk, composeEnhancers),
+  
+//   // other store enhancers if any
+// ));
 
 function App() {
 
@@ -49,7 +29,6 @@ function App() {
           <Route path="/About" element={<About />}></Route>
         </Routes> 
       </BrowserRouter>
-
     </div>
   )
 }

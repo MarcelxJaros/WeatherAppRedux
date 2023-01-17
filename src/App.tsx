@@ -4,19 +4,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './components/Home'
 import About from './components/About'
 
-// declare global {
-//   interface Window {
-//     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-//   }
-// }
-
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// const store = createStore(rootReducer, composeWithDevTools(
-//   applyMiddleware(thunk, composeEnhancers),
-  
-//   // other store enhancers if any
-// ));
-
 function App() {
 
 

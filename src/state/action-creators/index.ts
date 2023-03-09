@@ -18,11 +18,18 @@ export const decrement = (number: number) => {
     })
   }
 }
-export const reset = (number: number) => {
+export const reset = () => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
-      type: ActionType.RESET,
-      payload: number
+      type: ActionType.RESET
+    })
+  }
+}
+export const getWeatherData = (weatherData: object) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.GETWEATHERDATA,
+      payload: weatherData
     })
   }
 }

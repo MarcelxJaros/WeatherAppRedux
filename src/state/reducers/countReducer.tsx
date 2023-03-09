@@ -3,7 +3,7 @@ import { Action } from "../actions";
 
 const initialState = 0;
 
-const countReducer = (state: number = initialState, action: Action) => {
+export const countReducer = (state: number = initialState, action: Action) => {
   switch(action.type){
     case ActionType.INCREMENT: return state + action.payload;
     case ActionType.DECREMENT: return state - action.payload;
@@ -11,5 +11,3 @@ const countReducer = (state: number = initialState, action: Action) => {
     default: return state;
   }
 }
-
-export default countReducer;

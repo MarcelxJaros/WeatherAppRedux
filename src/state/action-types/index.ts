@@ -1,5 +1,6 @@
 export enum ActionType {
   INCREMENT = "increment",
   DECREMENT = "decrement",
-  RESET = "reset"
+  RESET = "reset",
+  GETWEATHERDATA = "getWeatherData"
 }

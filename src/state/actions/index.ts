@@ -15,5 +15,8 @@ interface ResetAction {
 interface GetWeatherDataAction {
   type: ActionType.GETWEATHERDATA,
 }
+interface SetChartDataAction {
+  type: ActionType.SETCHARTDATA,
+}
 
-export type Action = IncrementAction | DecrementAction | ResetAction | GetWeatherDataAction;
+export type Action = IncrementAction | DecrementAction | ResetAction | GetWeatherDataAction | SetChartDataAction;

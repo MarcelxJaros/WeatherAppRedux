@@ -33,3 +33,11 @@ export const getWeatherData = (weatherData: object) => {
     })
   }
 }
+export const setChartData = (chartData: object) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.SETCHARTDATA,
+      payload: chartData
+    })
+  }
+}

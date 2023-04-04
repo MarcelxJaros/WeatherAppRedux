@@ -1,8 +1,9 @@
 import './App.css'
-import DrawerAppBar from './components/NavBar'
+import DrawerAppBar from './components/NavBar/NavBar'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './components/Home'
 import About from './components/About'
+import Historical from './components/Historical/Historical'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/Home" element={<Home />}></Route>
           <Route path="/About" element={<About />}></Route>
+          <Route path="/Historical" element={<Historical />}></Route>
         </Routes> 
       </BrowserRouter>
     </div>

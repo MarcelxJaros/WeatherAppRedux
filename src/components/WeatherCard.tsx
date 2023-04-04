@@ -3,6 +3,8 @@ interface IWeatherCard {
   degrees: number
 }
 
+// create material ui react typescript component that will display weather details from parameter
+
 
 const WeatherCard = ({id, degrees}: IWeatherCard) => {
   return (

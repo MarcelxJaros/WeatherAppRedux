@@ -28,7 +28,7 @@ const DrawerAppBar = (props: Props) => {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography variant="h6" sx={{ my: 2}}>
         MUI
       </Typography>
       <Divider />
@@ -55,7 +55,7 @@ const DrawerAppBar = (props: Props) => {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', height: "64px"}}>
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
@@ -71,13 +71,13 @@ const DrawerAppBar = (props: Props) => {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, textAlign: 'left' }}
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, textAlign: 'left',  paddingLeft: 30  }}
           >
-            React Weather App
+            SkyDiff
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+          <Box sx={{ display: { xs: 'none', sm: 'block', paddingRight: 240 } }}>
             {navItems.map((item) => (
-              <Link key={item} to={`/${item}`} style={{ textDecoration: "none", color: "white" }}>
+              <Link key={item} to={`/${item}`} style={{ textDecoration: "none", color: "white"}}>
                 <ColorButton key={item} variant="contained" size="large" sx={{ ml: 1, color: '#fff' }} style={{ outline: "none", border: "none" }}>
                   {item}
                 </ColorButton>

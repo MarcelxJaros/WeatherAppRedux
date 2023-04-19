@@ -13,10 +13,12 @@ interface ResetAction {
   type: ActionType.RESET,
 }
 interface GetWeatherDataAction {
-  type: ActionType.GETWEATHERDATA,
+  payload: any;
+  type: ActionType.SETWEATHERDATA,
 }
 interface SetChartDataAction {
-  type: ActionType.SETCHARTDATA,
+  payload: any;
+  type: ActionType.SETFORMDATA,
 }
 
 export type Action = IncrementAction | DecrementAction | ResetAction | GetWeatherDataAction | SetChartDataAction;

@@ -1,11 +1,3 @@
-interface HourlyUnits {
-  time: string;
-  temperature_2m: string;
-}
-interface Hourly {
-  time: string[];
-  temperature_2m: number[];
-}
 export default interface IWeatherData {
   latitude: number;
   longitude: number;
@@ -14,6 +6,12 @@ export default interface IWeatherData {
   timezone: string;
   timezone_abbreviation: string;
   elevation: number;
-  hourly_units: HourlyUnits;
-  hourly: Hourly;
+  hourly_units: {
+    time: string;
+    temperature_2m: string;
+  };
+  hourly: {
+    time: string[];
+    temperature_2m: number[];
+  };
 }

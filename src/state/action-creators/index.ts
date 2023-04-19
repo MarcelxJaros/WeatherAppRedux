@@ -1,6 +1,7 @@
 import { ActionType } from "../action-types"
 import { Dispatch } from "redux"
 import { Action } from "../actions"
+import IFormData from "../../models/IFormData"
 
 export const increment = (number: number) => {
   return (dispatch: Dispatch<Action>) => {
@@ -25,19 +26,19 @@ export const reset = () => {
     })
   }
 }
-export const getWeatherData = (weatherData: object) => {
+export const setWeatherData = (weatherData: object) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
-      type: ActionType.GETWEATHERDATA,
+      type: ActionType.SETWEATHERDATA,
       payload: weatherData
     })
   }
 }
-export const setChartData = (chartData: object) => {
+export const setFormData = (formData: IFormData) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
-      type: ActionType.SETCHARTDATA,
-      payload: chartData
+      type: ActionType.SETFORMDATA,
+      payload: formData
     })
   }
 }

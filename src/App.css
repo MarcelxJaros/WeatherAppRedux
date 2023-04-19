@@ -3,6 +3,7 @@
   /* margin: 0 auto;
   padding: 2rem;
   text-align: center; */
+  justify-content: center;
 }
 
 .card {
@@ -11,10 +12,18 @@
 
 .input-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 20px;
+  justify-content: space-between;
 }
 
 .historical-container {
   display: flex;
+  flex-direction: column;
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }

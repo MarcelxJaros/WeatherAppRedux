@@ -3,6 +3,9 @@
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
+  
+  display: flex;
+  justify-content: center;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -22,7 +25,8 @@ a:hover {
 
 body {
   background-color: #ffffff;
-  margin: 0;
+  padding-left: 4em !important;
+  padding-right: 4em !important;
   display: flex;
   /* place-items: center; */
   min-width: 320px;

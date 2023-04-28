@@ -4,8 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Button, { ButtonProps } from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { blue, purple } from '@mui/material/colors';
-
-
+import skydiff from '../../assets/skydiff.png'
 
 interface Props {
   /**
@@ -16,7 +15,7 @@ interface Props {
 }
 
 const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Historical'];
+const navItems = ['Home', 'App'];
 
 const DrawerAppBar = (props: Props) => {
   const { window } = props;
@@ -57,6 +56,7 @@ const DrawerAppBar = (props: Props) => {
   return (
     <Box sx={{ display: 'flex', height: "64px"}}>
       <CssBaseline />
+          <div className='nav-items'>
       <AppBar component="nav">
         <Toolbar>
           <IconButton
@@ -68,14 +68,24 @@ const DrawerAppBar = (props: Props) => {
           >
             <MenuIcon />
           </IconButton>
+
+
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, textAlign: 'left',  paddingLeft: 30  }}
-          >
-            SkyDiff
-          </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block', paddingRight: 240 } }}>
+            sx={{ flexGrow: 1, display: 'flex !important',
+            'justify-content': 'space-around',
+            'flex-direction': 'row',
+            'align-items': 'center' , textAlign: 'left',  }}
+            style={{ width: '33.33%' }}
+            >
+            <div>
+              SkyDiff 
+              </div>
+            <div style={{width: '33.33%'}}>
+              <img src={skydiff} alt="Logo" style={{ height: "60px", width: "60px"}} />
+              </div>
+          <Box sx={{ display: { xs: 'none', sm: 'block', width: '33.33%' } }}>
             {navItems.map((item) => (
               <Link key={item} to={`/${item}`} style={{ textDecoration: "none", color: "white"}}>
                 <ColorButton key={item} variant="contained" size="large" sx={{ ml: 1, color: '#fff' }} style={{ outline: "none", border: "none" }}>
@@ -84,8 +94,11 @@ const DrawerAppBar = (props: Props) => {
               </Link>
             ))}
           </Box>
+          </Typography>
+
         </Toolbar>
       </AppBar>
+            </div>
       <Box component="nav">
         <Drawer
           container={container}

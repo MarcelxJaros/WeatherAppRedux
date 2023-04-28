@@ -34,7 +34,6 @@ const Home = () => {
   console.log(reduxWeather);
   return (
     <>
-
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}

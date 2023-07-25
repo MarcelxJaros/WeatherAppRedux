@@ -1,21 +1,21 @@
-import { Button } from '@material-ui/core';
-import { Slider, TextField, debounce } from '@mui/material';
+import { Button, createMuiTheme } from '@material-ui/core';
+import { ButtonProps, TextField, debounce } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { FormEvent, useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import '../../App.css'
 import getGeoData from '../GetGeoData';
-import getWeather from '../GetWeatherData2';
+import getWeather from '../GetWeatherData';
 import WeatherChart from '../WeatherChart';
 import TimeSlider from './TimeSlider';
-import { Dayjs } from 'dayjs';
-import IFormData from '../../models/IFormData';
+import dayjs, { Dayjs } from 'dayjs';
 import { bindActionCreators } from 'redux';
 import { State, actionCreators } from '../../state';
 import { useDispatch, useSelector } from 'react-redux';
-import IWeatherData from '../../models/IWeatherData'
 import WeatherCard from '../WeatherCard';
+import { styled } from '@mui/material/styles';
+import { pink } from '@mui/material/colors';
 
 const marks = [
   {
@@ -50,12 +50,22 @@ const Historical = () => {
   const weatherdata = useSelector((state: State) => state.weatherdata)
   console.log("weatherdata:", weatherdata);
 
+  const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
+    color: theme.palette.getContrastText(pink[500]),
+    backgroundColor: pink[300],
+    '&:hover': {
+      backgroundColor: pink[200]
+    },
+  }));
+
+
+
   const handleSliderChange = (values: number[]) => {
     console.log(values);
     setSlider(values)
     // console.log(weatherdata);
     // setWeatherData
-    let newData = {city: formData.city, date: formData.date, slider: values}
+    let newData = { city: formData.city, date: formData.date, slider: values }
     setFormData(newData)
   }
 
@@ -63,21 +73,53 @@ const Historical = () => {
     setFormData({ city, date, slider });
     if (city !== null && date !== null) {
       getGeoData(city).then(async result => {
-        // getWeather({ lon: result.data[0].lon, lat: result.data[0].lat, date: date }).then((result: { data: IWeatherData }) => {
-        //   console.log(result);
-
-        //       // setWeatherData(result.data.hourly.temperature_2m.slice(slider[0], slider[1]));
-        // });
-        const [resultHistory, resultToday] = await Promise.all([
+        const [resultForecast, resultToday] = await Promise.all([
           getWeather({ lon: result.data[0].lon, lat: result.data[0].lat, date: date }),
           getWeather({ lon: result.data[0].lon, lat: result.data[0].lat })
         ]);
-        console.log("full weather data:", resultHistory);
-        
-        const [weatherDataToday, weatherDataHistory, timeUnits] = [resultToday.data.hourly.temperature_2m, resultHistory.data.hourly.temperature_2m, resultHistory.data.hourly.time];
-        // const [weatherDataToday, weatherDataHistory] = [resultToday.data.hourly.temperature_2m, resultHistory.data.hourly.temperature_2m].map(data => data.slice(slider[0], slider[1]));
+        console.log("full weather data:", resultForecast);
 
-        setWeatherData({history: weatherDataHistory, today: weatherDataToday, timeUnits: timeUnits});
+        const time = resultToday?.data?.hourly?.time?.slice(formData.slider[0], formData.slider[1] + 1).map((unit: any) => {
+          const timeStr = unit?.slice(0, -1).split('T')[1];
+          const hour = timeStr?.slice(0, 2);
+          const minute = timeStr?.slice(3, 5).padStart(2, '0');
+          return `${hour}:${minute}`;
+        });
+
+        const allTemperatures = resultForecast.data.hourly.apparent_temperature.concat(resultToday.data.hourly.apparent_temperature);
+        const minTemperature = Math.min(...allTemperatures);
+        const maxTemperature = Math.max(...allTemperatures);
+        setWeatherData(
+          {
+            forecast:
+            {
+              date: date.format('DD.MM.YYYY'),
+              time: resultForecast.data.hourly.time,
+              temperature_2m: resultForecast.data.hourly.temperature_2m,
+              apparent_temperature: resultForecast.data.hourly.apparent_temperature,
+              rain: resultForecast.data.hourly.rain,
+              windspeed_10m: resultForecast.data.hourly.windspeed_10m,
+              relativehumidity_2m: resultForecast.data.hourly.relativehumidity_2m,
+              weathercode: resultForecast.data.hourly.weathercode,
+            },
+            today:
+            {
+              date: dayjs().format('DD.MM.YYYY'),
+              time: resultToday.data.hourly.time,
+              temperature_2m: resultToday.data.hourly.temperature_2m,
+              apparent_temperature: resultToday.data.hourly.apparent_temperature,
+              rain: resultToday.data.hourly.rain,
+              windspeed_10m: resultToday.data.hourly.windspeed_10m,
+              relativehumidity_2m: resultToday.data.hourly.relativehumidity_2m,
+              weathercode: resultToday.data.hourly.weathercode,
+            },
+            timeUnits:
+              time,
+            minMax:
+              { minTemperature: minTemperature, maxTemperature: maxTemperature },
+            meta: (date.format('DD.MM.YYYY') > dayjs().format('DD.MM.YYYY') ? "future" : "history")
+          }
+        );
       });
     } else {
       console.log("error");
@@ -85,25 +127,33 @@ const Historical = () => {
 
   }, 100), [city, date, slider, setFormData, setWeatherData]);
 
+
   return (
     <div className='historical-container'>
+      <div className="form-container">
+
       <div className='input-container'>
-        <TextField id="outlined-basic" style={{ width: "30%"}} value={city} name="city" label="City" variant="outlined" onChange={e => setCity(e.target.value)} />
-        {/* <br /> */}
+        <TextField id="outlined-basic" className="input-field" value={city} name="city" label="City" variant="outlined" onChange={e => setCity(e.target.value)} />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker value={date} label="Date" onChange={(newValue) => setDate(newValue)} />
+          <DatePicker value={date} label="Date" format="DD.MM.YYYY" onChange={(newValue) => setDate(newValue)} />
         </LocalizationProvider>
-        {/* <br /> */}
-        <Button variant="contained" size="large" sx={{ ml: 1, color: '#fff', width: "30%", marginLeft: "0 !important" }} style={{ outline: "none", border: "none" }} onClick={handleClick}>Update</Button>
-        {/* <br /> */}
+        <ColorButton variant="contained" size="large" sx={{ ml: 1, color: '#fff', width: "30%", marginLeft: "0 !important" }} style={{ outline: "none", border: "none" }} onClick={handleClick}>Update</ColorButton>
       </div>
-        <TimeSlider handleSliderChange={handleSliderChange} />
+        
+      <TimeSlider handleSliderChange={handleSliderChange}/>
+      {/* <ThemeProvider theme={theme}>
+      <TimeSlider color="brown" />
+    </ThemeProvider> */}
+      </div>
       <div>
         <WeatherChart />
         <br />
         <div className='cards-container'>
-        <WeatherCard />
-        <WeatherCard />
+          {weatherdata ? <>
+            <WeatherCard {...weatherdata.today} />
+            <WeatherCard {...weatherdata.forecast} />
+          </>
+            : <></>}
         </div>
       </div>
     </div>

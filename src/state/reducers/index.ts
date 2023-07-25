@@ -1,13 +1,13 @@
 import { combineReducers, Reducer } from "redux";
-import {countReducer} from "./countReducer";
 import { weatherReducer } from "./weatherReducer";
 import { formReducer } from "./formReducer";
+import { hoveredReducer } from "./hoveredReducer";
 
 
 export const reducers = combineReducers({
-  count: countReducer,
   weatherdata: weatherReducer,
-  formData: formReducer
+  formData: formReducer,
+  hoveredPoint: hoveredReducer
 })
 
 export type State = ReturnType<typeof reducers>

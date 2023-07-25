@@ -23,7 +23,7 @@ function getWeather ({lon, lat, date = dayjs()}: IGetWeather) {
     params: {
       latitude: lat,
       longitude: lon,
-      hourly: "temperature_2m,rain,showers,snowfall,windspeed_10m,weathercode",
+      hourly: "temperature_2m,apparent_temperature,rain,showers,snowfall,windspeed_10m,weathercode,relativehumidity_2m",
       current_weather: true,
       start_date: date.format('YYYY-MM-DD'),
       end_date: date.format('YYYY-MM-DD')

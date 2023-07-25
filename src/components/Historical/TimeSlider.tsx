@@ -3,6 +3,34 @@ import Slider from '@mui/material/Slider';
 import { useSelector } from "react-redux";
 import { State } from "../../state";
 // https://mui.com/material-ui/react-slider/
+import "@mui/material/styles/createPalette";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+declare module "@mui/material/styles/createPalette" {
+  interface Palette {
+    brown: PaletteColor;
+  }
+  interface PaletteOptions {
+    brown: PaletteColorOptions;
+  }
+}
+
+declare module "@mui/material/Slider" {
+  interface SliderPropsColorOverrides {
+    brown: true;
+  }
+}
+
+const defaultTheme = createTheme();
+const theme = createTheme({
+  palette: {
+    brown: defaultTheme.palette.augmentColor({
+      color: {
+        main: '#ADD8E6'
+      },
+      name: "brown"
+    })
+  }
+});
 
 interface TimeSliderProps {
   handleSliderChange: (values: number[]) => void;
@@ -45,6 +73,8 @@ const TimeSlider = ({handleSliderChange}: TimeSliderProps) => {
   };
   return (
     <div style={{marginLeft: "24px", marginRight: "24px"}}>
+      <ThemeProvider theme={theme}>
+
       <Slider
         getAriaLabel={() => 'Choose time frame'}
         value={value}
@@ -56,7 +86,9 @@ const TimeSlider = ({handleSliderChange}: TimeSliderProps) => {
         marks
         min={0}
         max={23}
-      />
+        color="brown"
+        />
+        </ThemeProvider>
 
     </div>
   )

@@ -7,30 +7,51 @@ import { useEffect, useRef, useState } from "react";
 import { bindActionCreators } from "redux";
 import getOpenWeatherIcon from "./GetWeatherIcon";
 const WeatherChart = () => {
+  const labelRef = useRef<SVGElement>(null);
+
+  const dispatch = useDispatch()
+
+  const { setHoveredPoint } = bindActionCreators(actionCreators, dispatch)
 
   const formData = useSelector((state: State) => state.formData)
-
   const weatherdata = useSelector((state: State) => state.weatherdata)
-  console.log("time:", weatherdata?.timeUnits);
-  // console.log("weatherdata:", weatherdata?.timeUnits?.slice(formData.slider[0], formData.slider[1]));
+  console.log(weatherdata?.timeUnits);
+  
+  const handleMouseOver = () => {
+    console.log('Mouse over the chart!');
+    // Add custom logic here for when the mouse pointer enters the chart area
+  };
 
-  // const time = weatherdata?.timeUnits?.slice(formData.slider[0], (formData.slider[1] )).map((unit: any) => unit.slice(0, -1).split('T')[1].slice(0, 6))
-  const time = weatherdata?.timeUnits?.slice(formData.slider[0], formData.slider[1] + 1).map((unit: any) => {
-    const timeStr = unit.slice(0, -1).split('T')[1];
-    const hour = timeStr.slice(0, 2);
-    const minute = timeStr.slice(3, 5).padStart(2, '0');
-    // return hour.Number
-    return `${hour}:${minute}`;
-  });
-  console.log(time);
-  const getOptions = (type: any, history: any, today: any, timeUnits: any) => ({
+  const handleMouseOut = () => {
+    if (labelRef.current !== null && labelRef.current.getAttribute('opacity') === '0') {
+      console.log('Mouse left the chart.');
+      setHoveredPoint({index: -1, time: ''});
+    }
+  };
+
+  const dataHovered = (hoveredPoint: number) => {
+    // console.log("hovered over:", hoveredPoint);
+    setHoveredPoint({index: hoveredPoint, time: weatherdata?.timeUnits[hoveredPoint]});
+    // setHoveredPoint(-1);
+  }
+
+  // console.log(time);
+  const getOptions = (type: any, forecast: any, today: any, timeUnits: any, meta: string) => ({
     chart: {
       type,
       width: 800,
       height: 400,
+      borderRadius: 10,
+      backgroundColor: {
+        linearGradient: [-100, -100, -100, 700],
+        stops: [
+            [0, 'rgb(255, 255, 255)'],
+            [1, 'rgb(173, 216, 230)']
+        ]
+    },
     },
     title: {
-      text: `${type} chart`,
+      text: formData.city,
     },
     tooltip: {
       shared: true,
@@ -46,15 +67,17 @@ const WeatherChart = () => {
     },
     series: [
       {
-        id: 'history',
-        name: 'history',
-        data: history,
+        id: meta,
+        name: meta,
+        data: forecast,
+        color: '#FFB6C1',
+        marker: {
+          symbol: 'circle',
+        },
         point: {
           events: {
             mouseOver: function (this: any) {
-              console.log('Hovered over history point:', this.y, this.x)
-              console.log(getOpenWeatherIcon("1"))
-
+              dataHovered(this.x)
             },
           },
         },
@@ -63,12 +86,14 @@ const WeatherChart = () => {
         id: 'today',
         name: 'today',
         data: today,
+        color: '#000000',
+        marker: {
+          symbol: 'diamond',
+        },
         point: {
           events: {
             mouseOver: function (this: any) {
-              console.log('Hovered over today point:', this.y, this.x)
-              console.log(getOpenWeatherIcon("1"))
-              // console.log("timeUnits:", timeUnits);
+              dataHovered(this.x)
             },
           },
         },
@@ -78,15 +103,21 @@ const WeatherChart = () => {
 
   if (weatherdata !== undefined) {
     return (
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={getOptions(
-          'spline',
-          weatherdata?.history?.slice(formData.slider[0], formData.slider[1] + 1),
-          weatherdata?.today?.slice(formData.slider[0], formData.slider[1] + 1),
-          time
-        )}
-      />
+      <div
+        // onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+      >
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={getOptions(
+            'spline',
+            weatherdata?.forecast?.apparent_temperature?.slice(formData?.slider[0], formData?.slider[1] + 1),
+            weatherdata?.today?.apparent_temperature?.slice(formData.slider[0], formData.slider[1] + 1),
+            weatherdata?.timeUnits?.slice(formData.slider[0], formData.slider[1] + 1),
+            weatherdata?.meta
+          )}
+        />
+      </div>
     )
   } else {
     return <></>

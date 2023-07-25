@@ -74,9 +74,9 @@ const DrawerAppBar = (props: Props) => {
             variant="h6"
             component="div"
             sx={{ flexGrow: 1, display: 'flex !important',
-            'justify-content': 'space-around',
-            'flex-direction': 'row',
-            'align-items': 'center' , textAlign: 'left',  }}
+            'justifyContent': 'space-around',
+            'flexDirection': 'row',
+            'alignItems': 'center' , textAlign: 'left',  }}
             style={{ width: '33.33%' }}
             >
             <div>

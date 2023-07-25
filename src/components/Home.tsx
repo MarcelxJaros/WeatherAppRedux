@@ -1,52 +1,27 @@
-import { useState } from 'react'
+import { Typography } from '@mui/material';
 import '../App.css'
-import { useDispatch, useSelector } from 'react-redux/es/exports'
-import { bindActionCreators } from 'redux'
-import { actionCreators, State } from '../state'
-import getWeather from './GetWeatherData2'
-import IWeatherData from '../models/IWeatherData'
-import WeatherCard from './WeatherCard2'
+import skydiff from '../assets/skydiff.png'
 
 const Home = () => {
-  const [count, setCount] = useState(0)
-  const dispatch = useDispatch()
 
-  const { increment, decrement, reset, setWeatherData } = bindActionCreators(actionCreators, dispatch)
-  const reduxCount = useSelector((state: State) => state.count)
-  const reduxWeather = useSelector((state: State) => state.weatherdata)
-
-  const bratislava = {lat: 48.148598, lon: 17.107748, timezone: "GMT", id: "Bratislava"}
-  // const [weatherData, setWeatherData] = useState(null)
-
-  let locationProps = {lat: 52.52, lon: 13.41, timezone: "GMT"}
-  let currentDateTime = Date()
-  let test = {id: "Bratislava", degrees: 3.1}
-  const [loading, setLoading] = useState(false);
-
-  console.log(currentDateTime)
-
-  // getWeather(bratislava).then((result: { data: any }) => {console.log("Bratislava weather:", result.data);)
-  const handleClick = () => {
-    setLoading(true)
-    getWeather(bratislava).then((result: { data: any }) => {console.log("Bratislava weather:", result.data); setWeatherData({test: "test", id: "1"}); setLoading(false)})
-  }
-    
-  console.log(reduxWeather);
   return (
-    <>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <h3> redux count is {reduxCount} </h3>
-        <button onClick={() => increment(1)}>+</button>
-        <button onClick={() => decrement(1)}>-</button>
-        <button onClick={() => reset()}>0</button>
-        <button onClick={() => handleClick()}>get weather</button><hr />
-        {/* <button onClick={() => handleClick()}>test</button><hr /> */}
-        {!loading ? <WeatherCard {...test} /> : "loading"}
+    <div className='home-container'>
+      <div className="hero-container">
+
+        <img src={skydiff} alt="Logo" style={{ height: "240px", width: "240px" }} />
+        <Typography variant="h1" component="div" sx={{ padding: 1 }}>SkyDiff</Typography>
       </div>
-    </>
+      <div className="body-container">
+      <Typography variant="body1" sx={{ padding: 1, textAlign: 'justify' }}>
+      <div>Stay ahead of unpredictable weather with this SkyDiff React App!</div>
+      <div>Never step out unprepared again. My app lets you compare today's temperature with any city's past or future weather, making it easy to visualize temperature trends on interactive graphs.
+      Gain insights into temperature fluctuations throughout the day, helping you make well-informed clothing choices. Whether you're reminiscing about a past trip or planning a future adventure, my app has you covered.</div>
+      <div>With just a few taps, select any date and city worldwide, experiencing the convenience of time travel through weather data. Bookmark frequently visited cities for easy access to temperature trends.
+      Join me today and stay one step ahead of Mother Nature. Dress appropriately for any weather, anywhere, anytime with the Temperature React App!</div>
+      </Typography>
+        
+      </div>
+    </div>
 
   )
 }

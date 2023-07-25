@@ -11,6 +11,11 @@ export default interface IWeatherData {
     temperature_2m: string;
   };
   hourly: {
+    weathercode: any;
+    relativehumidity_2m: any;
+    windspeed_10m: any;
+    rain: any;
+    apparent_temperature: any;
     time: string[];
     temperature_2m: number[];
   };

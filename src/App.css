@@ -63,20 +63,35 @@ button:focus-visible {
 .card {
   padding: 2em;
 }
+.weather-card {
+  width: 370px; 
+  height: 276px;
+  /* background-color: red !important; */
+  padding: 2px; 
+  border-radius: 8px; 
+}
+
 .input-container {
   display: flex;
   flex-direction: row;
   margin: 20px;
+  padding-top: 20px;
   justify-content: space-between;
 }
 .input-field {
   /* width: 30%; */
 }
 .historical-container {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 100%; */
 }
+.chart-container {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .form-container {
   background: linear-gradient(to top, rgb(253, 245, 245), lightpink);
   border-radius: 10px;
@@ -86,7 +101,12 @@ button:focus-visible {
 .cards-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;;
+  justify-content: space-between;
+  gap: 16px;
+}
+.weather-cards-container {
+  display: 'flex';
+  justify-content: 'center'
 }
 
 .weather-card-container {
@@ -149,6 +169,11 @@ button:focus-visible {
 
   border: 1px solid grey;
 }
+/* .highcharts-data-table table {
+  min-width: 310px;
+  max-width: 800px;
+  margin: 1em auto;
+} */
 @media only screen and (max-width: 800px) {
   .body-container {
     background-color: lightblue;
@@ -156,7 +181,18 @@ button:focus-visible {
   .input-container {
     flex-direction: column;
   }
-  .historical-container {
-
+  .cards-container {
+    width: auto;
   }
+  .weather-card {
+    width: auto;
+  }
+  .weather-card-container {
+    flex-basis: 100%;
+    flex-direction: column;
+  }
+  .weather-cards-container {
+    flex-basis: 100%;
+   }
+
 }

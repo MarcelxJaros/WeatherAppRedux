@@ -5,15 +5,15 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useCallback, useState } from 'react';
 import '../../App.css'
-import getGeoData from '../GetGeoData';
-import getWeather from '../GetWeatherData';
-import WeatherChart from '../WeatherChart';
+import getGeoData from '../services/GetGeoData';
+import getWeather from '../services/GetWeatherData';
+import WeatherChart from './WeatherChart';
 import TimeSlider from './TimeSlider';
 import dayjs, { Dayjs } from 'dayjs';
 import { bindActionCreators } from 'redux';
 import { State, actionCreators } from '../../state';
 import { useDispatch, useSelector } from 'react-redux';
-import WeatherCard from '../WeatherCard';
+import WeatherCard from './WeatherCard';
 import { styled } from '@mui/material/styles';
 import { pink } from '@mui/material/colors';
 
@@ -141,21 +141,19 @@ const Historical = () => {
       </div>
         
       <TimeSlider handleSliderChange={handleSliderChange}/>
-      {/* <ThemeProvider theme={theme}>
-      <TimeSlider color="brown" />
-    </ThemeProvider> */}
+      
       </div>
-      <div>
+      <div className='chart-container'>
         <WeatherChart />
         <br />
+      </div>
         <div className='cards-container'>
           {weatherdata ? <>
             <WeatherCard {...weatherdata.today} />
             <WeatherCard {...weatherdata.forecast} />
-          </>
+            </>
             : <></>}
-        </div>
-      </div>
+          </div>
     </div>
   )
 }

@@ -1,11 +1,11 @@
 import { Card, CardMedia, Grid, Typography } from "@mui/material"
 import { lightBlue } from "@mui/material/colors"
 import { useDispatch, useSelector } from 'react-redux/es/exports'
-import { State } from "../state"
+import { State } from "../../state"
 import dayjs from "dayjs";
 import { useRef } from "react";
 import jQuery from "jquery";
-import getOpenWeatherIcon from "./GetWeatherIcon";
+import getOpenWeatherIcon from "../services/GetWeatherIcon";
 
 interface IMyWeatherData {
   relativehumidity_2m: number[];
@@ -45,14 +45,14 @@ const WeatherCard = (props: IMyWeatherData) => {
   // if (hoveredPoint === -1 || !props) {
   // console.log(hoveredPoint);
   if (hoveredPoint.index === -1 || !props && labelRef.current && labelRef.current.getAttribute('opacity') === '0') {
-    return <><Card sx={{ width: 370, height: 276, padding: 2, borderRadius: 2, backgroundColor: 'lightgray' }}></Card></>
+    return <><Card className="weather-card" sx={{ backgroundColor: 'lightgray' }}></Card></>
 
   } else {
 
     // return <></>
     return (
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Card sx={{ width: 370, padding: 2, borderRadius: 2, backgroundColor: calculateInterpolatedColor(props?.temperature_2m[hoveredPoint.index]) }}>
+      <div className="weather-cards-container">
+        <Card className="weather-card" sx={{ backgroundColor: calculateInterpolatedColor(props?.temperature_2m[hoveredPoint.index]) }}>
           <Typography variant="h6" component="div" sx={{ padding: 1 }}>
             <div className="flex-div">
             Bratislava, {props?.date?.toString() === dayjs().format('DD.MM.YYYY') ? "TODAY" : props?.date?.toString()}, {hoveredPoint.time} <div className={props?.date?.toString() === dayjs().format('DD.MM.YYYY') ? "black-square" : "blue-dot"}></div>

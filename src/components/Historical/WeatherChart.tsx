@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { State, actionCreators } from "../state";
+import { State, actionCreators } from "../../state";
 import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { useEffect, useRef, useState } from "react";
 import { bindActionCreators } from "redux";
-import getOpenWeatherIcon from "./GetWeatherIcon";
+import getOpenWeatherIcon from "../services/GetWeatherIcon";
+import useWindowSize from "../services/GetWindowSize";
+
 const WeatherChart = () => {
   const labelRef = useRef<SVGElement>(null);
 
@@ -16,6 +18,10 @@ const WeatherChart = () => {
   const formData = useSelector((state: State) => state.formData)
   const weatherdata = useSelector((state: State) => state.weatherdata)
   console.log(weatherdata?.timeUnits);
+
+  const chartRef = useRef(null);
+
+  const [chartWidth, setChartWidth] = useState(800);
   
   const handleMouseOver = () => {
     console.log('Mouse over the chart!');
@@ -36,10 +42,10 @@ const WeatherChart = () => {
   }
 
   // console.log(time);
-  const getOptions = (type: any, forecast: any, today: any, timeUnits: any, meta: string) => ({
+  const getOptions = (type: any, forecast: any, today: any, timeUnits: any, meta: string, chartWidth: number) => ({
     chart: {
       type,
-      width: 800,
+      width: chartWidth,
       height: 400,
       borderRadius: 10,
       backgroundColor: {
@@ -101,6 +107,17 @@ const WeatherChart = () => {
     ],
   });
 
+  const size = useWindowSize();
+  console.log(size)
+  useEffect(() => {
+    console.log(chartWidth);
+    if (typeof size.width === 'number' && size.width < 820 && size.width > 0) {
+      setChartWidth(size.width - 20)
+    } else {
+      setChartWidth(800)
+    }
+  }, [size])
+
   if (weatherdata !== undefined) {
     return (
       <div
@@ -108,13 +125,15 @@ const WeatherChart = () => {
         onMouseOut={handleMouseOut}
       >
         <HighchartsReact
+          ref={chartRef}
           highcharts={Highcharts}
           options={getOptions(
             'spline',
             weatherdata?.forecast?.apparent_temperature?.slice(formData?.slider[0], formData?.slider[1] + 1),
             weatherdata?.today?.apparent_temperature?.slice(formData.slider[0], formData.slider[1] + 1),
             weatherdata?.timeUnits?.slice(formData.slider[0], formData.slider[1] + 1),
-            weatherdata?.meta
+            weatherdata?.meta,
+            chartWidth
           )}
         />
       </div>

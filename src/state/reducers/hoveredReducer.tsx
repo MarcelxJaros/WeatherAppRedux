@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { ActionType } from "../action-types";
 import { Action } from "../actions";
+import IHoveredPoint from "../../models/IHoveredPoint";
 
 const initialState = {index: -1, time: "00:00"};
 

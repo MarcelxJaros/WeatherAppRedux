@@ -2,6 +2,7 @@ import { ActionType } from "../action-types"
 import { Dispatch } from "redux"
 import { Action } from "../actions"
 import IFormData from "../../models/IFormData"
+import IHoveredPoint from "../../models/IHoveredPoint"
 
 export const setWeatherData = (weatherData: object) => {
   return (dispatch: Dispatch<Action>) => {

@@ -18,7 +18,7 @@ interface Location {
 function getGeoData (city: String) {
 // function getWeather (lat: number = 52.52, lon: number = 13.41, timezone: string) {
   // return axios.get("http://api.openweathermap.org/geo/1.0/direct?q=Bratislava&appid=8bd71818d4ce90bc1d4ffd65a3856d9e")
-  return axios.get("http://api.openweathermap.org/geo/1.0/direct", {
+  return axios.get("https://api.openweathermap.org/geo/1.0/direct", {
     params: {
       q: city,
       appid: "8bd71818d4ce90bc1d4ffd65a3856d9e",

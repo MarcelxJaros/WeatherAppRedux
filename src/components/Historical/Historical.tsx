@@ -1,5 +1,4 @@
-import { Button, createMuiTheme } from '@material-ui/core';
-import { ButtonProps, TextField, debounce } from '@mui/material';
+import { TextField, debounce } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -14,27 +13,7 @@ import { bindActionCreators } from 'redux';
 import { State, actionCreators } from '../../state';
 import { useDispatch, useSelector } from 'react-redux';
 import WeatherCard from './WeatherCard';
-import { styled } from '@mui/material/styles';
-import { pink } from '@mui/material/colors';
-
-const marks = [
-  {
-    value: 0,
-    label: '0:00',
-  },
-  {
-    value: 1,
-    label: '1:00',
-  },
-  {
-    value: 2,
-    label: '2:00',
-  },
-  {
-    value: 3,
-    label: '3:00',
-  },
-];
+import CustomButton from './CustomButton';
 
 const Historical = () => {
 
@@ -50,15 +29,11 @@ const Historical = () => {
   const weatherdata = useSelector((state: State) => state.weatherdata)
   console.log("weatherdata:", weatherdata);
 
-  const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
-    color: theme.palette.getContrastText(pink[500]),
-    backgroundColor: pink[300],
-    '&:hover': {
-      backgroundColor: pink[200]
-    },
-  }));
+  const [isLoading, setIsLoading] = useState(false);
 
-
+  const myColor = {
+    color: '#f06292', hover: '#f48fb1'
+  }
 
   const handleSliderChange = (values: number[]) => {
     console.log(values);
@@ -70,6 +45,7 @@ const Historical = () => {
   }
 
   const handleClick = useCallback(debounce(() => {
+    setIsLoading(true);
     setFormData({ city, date, slider });
     if (city !== null && date !== null) {
       getGeoData(city).then(async result => {
@@ -120,6 +96,9 @@ const Historical = () => {
             meta: (date.format('DD.MM.YYYY') > dayjs().format('DD.MM.YYYY') ? "future" : "history")
           }
         );
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 100000);
       });
     } else {
       console.log("error");
@@ -127,33 +106,29 @@ const Historical = () => {
 
   }, 100), [city, date, slider, setFormData, setWeatherData]);
 
-
   return (
     <div className='historical-container'>
       <div className="form-container">
 
-      <div className='input-container'>
-        <TextField id="outlined-basic" className="input-field" value={city} name="city" label="City" variant="outlined" onChange={e => setCity(e.target.value)} />
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker value={date} label="Date" format="DD.MM.YYYY" onChange={(newValue) => setDate(newValue)} />
-        </LocalizationProvider>
-        <ColorButton variant="contained" size="large" sx={{ ml: 1, color: '#fff', width: "30%", marginLeft: "0 !important" }} style={{ outline: "none", border: "none" }} onClick={handleClick}>Update</ColorButton>
-      </div>
-        
-      <TimeSlider handleSliderChange={handleSliderChange}/>
-      
+        <div className='input-container'>
+          <TextField id="outlined-basic" className="input-field" value={city} name="city" label="City" variant="outlined" onChange={e => setCity(e.target.value)} />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker value={date} label="Date" format="DD.MM.YYYY" onChange={(newValue) => setDate(newValue)} />
+          </LocalizationProvider>
+          <CustomButton value='UPDATE' className="update-button" disabled={isLoading} isLoading={isLoading} myColor={myColor} variant="contained" size="large" onClick={handleClick}/>
+        </div>
+        <TimeSlider handleSliderChange={handleSliderChange} />
       </div>
       <div className='chart-container'>
         <WeatherChart />
-        <br />
       </div>
-        <div className='cards-container'>
-          {weatherdata ? <>
-            <WeatherCard {...weatherdata.today} />
-            <WeatherCard {...weatherdata.forecast} />
-            </>
-            : <></>}
-          </div>
+      <div className='cards-container'>
+        {weatherdata ? <>
+          <WeatherCard {...weatherdata.today} />
+          <WeatherCard {...weatherdata.forecast} />
+        </>
+          : <></>}
+      </div>
     </div>
   )
 }

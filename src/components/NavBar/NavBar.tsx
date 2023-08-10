@@ -5,6 +5,7 @@ import Button, { ButtonProps } from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { blue, purple } from '@mui/material/colors';
 import skydiff from '../../assets/skydiff.png'
+import CustomButton from '../Historical/CustomButton';
 
 interface Props {
   /**
@@ -16,6 +17,9 @@ interface Props {
 
 const drawerWidth = 240;
 const navItems = ['Home', 'App'];
+const myColor = {
+  color: '#697f98', hover: '#697f98'
+}
 
 const DrawerAppBar = (props: Props) => {
   const { window } = props;
@@ -27,17 +31,19 @@ const DrawerAppBar = (props: Props) => {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2}}>
-        MUI
+      <Typography variant="h6" sx={{ my: 2 }}>
+        SkyDiff
       </Typography>
       <Divider />
       <List>
         {navItems.map((item) => (
+            <Link key={item} to={`/${item}`}>
           <ListItem key={item} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
               <ListItemText primary={item} />
             </ListItemButton>
           </ListItem>
+            </Link>
         ))}
       </List>
     </Box>
@@ -54,51 +60,50 @@ const DrawerAppBar = (props: Props) => {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex', height: "64px"}}>
+    <Box sx={{ display: 'flex', height: "64px" }}>
       <CssBaseline />
-          <div className='nav-items'>
-      <AppBar component="nav">
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-
-
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: 'flex !important',
-            'justifyContent': 'space-around',
-            'flexDirection': 'row',
-            'alignItems': 'center' , textAlign: 'left',  }}
-            style={{ width: '33.33%' }}
+      <div className='nav-items'>
+        <AppBar component="nav" position="absolute" className='nav-bar'>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'none' } }}
             >
-            <div>
-              SkyDiff 
-              </div>
-            <div style={{width: '33.33%'}}>
-              <img src={skydiff} alt="Logo" style={{ height: "60px", width: "60px"}} />
-              </div>
-          <Box sx={{ display: { xs: 'none', sm: 'block', width: '33.33%' } }}>
-            {navItems.map((item) => (
-              <Link key={item} to={`/${item}`} style={{ textDecoration: "none", color: "white"}}>
-                <ColorButton key={item} variant="contained" size="large" sx={{ ml: 1, color: '#fff' }} style={{ outline: "none", border: "none" }}>
-                  {item}
-                </ColorButton>
-              </Link>
-            ))}
-          </Box>
-          </Typography>
+              <MenuIcon />
+            </IconButton>
 
-        </Toolbar>
-      </AppBar>
-            </div>
+
+            <Typography
+              variant="h6"
+              component="div"
+              className='nav-item-typography'
+            >
+              <div className='nav-item left'>
+                SkyDiff
+              </div>
+              <div className='nav-item center'>
+                <img className='nav-logo' src={skydiff} alt="Logo" />
+              </div>
+              <Box className='nav-item right'>
+                {navItems.map((item) => (
+                  <Link key={item} to={`/${item}`}>
+                    {/* <ColorButton className="nav-button" key={item} variant="contained" size="large">
+                      {item}
+                    </ColorButton> */}
+                    <CustomButton value={item} className="nav-button" myColor={myColor} variant="contained" size="large">
+                      
+                    </CustomButton>
+                  </Link>
+                ))}
+              </Box>
+            </Typography>
+
+          </Toolbar>
+        </AppBar>
+      </div>
       <Box component="nav">
         <Drawer
           container={container}

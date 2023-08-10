@@ -20,13 +20,12 @@ interface IMyWeatherData {
 const WeatherCard = (props: IMyWeatherData) => {
   const hoveredPoint = useSelector((state: State) => state.hoveredPoint)
   const minMaxTemperature = useSelector((state: State) => state.weatherdata.minMax)
-  // console.log(hoveredPoint);
+  console.log(props);
 
   const minValue = minMaxTemperature?.minTemperature;
   const maxValue = minMaxTemperature?.maxTemperature;
-  // console.log({minValue, maxValue});
   const minColor = [173, 216, 230]; // RGB values for the starting color (light blue)
-  const maxColor = [255, 182, 193];     // RGB values for the ending color (red)
+  const maxColor = [255, 182, 193]; // RGB values for the ending color (light pink)
 
   const labelRef = useRef<SVGElement>(null);
 
@@ -40,22 +39,16 @@ const WeatherCard = (props: IMyWeatherData) => {
     return `rgb(${interpolatedColor.join(',')})`;
   };
   
-  // const weatherdata = useSelector((state: State) => state.weatherdata)
-  // console.log("weatherdata:", props.temperature_2m[hoveredPoint]);
-  // if (hoveredPoint === -1 || !props) {
-  // console.log(hoveredPoint);
   if (hoveredPoint.index === -1 || !props && labelRef.current && labelRef.current.getAttribute('opacity') === '0') {
-    return <><Card className="weather-card" sx={{ backgroundColor: 'lightgray' }}></Card></>
+    return <><Card className="weather-card empty"></Card></>
 
   } else {
-
-    // return <></>
     return (
       <div className="weather-cards-container">
         <Card className="weather-card" sx={{ backgroundColor: calculateInterpolatedColor(props?.temperature_2m[hoveredPoint.index]) }}>
           <Typography variant="h6" component="div" sx={{ padding: 1 }}>
-            <div className="flex-div">
-            Bratislava, {props?.date?.toString() === dayjs().format('DD.MM.YYYY') ? "TODAY" : props?.date?.toString()}, {hoveredPoint.time} <div className={props?.date?.toString() === dayjs().format('DD.MM.YYYY') ? "black-square" : "blue-dot"}></div>
+            <div className="card-heading">
+            Bratislava, <br className="line-break-phone" />{props?.date?.toString() === dayjs().format('DD.MM.YYYY') ? "TODAY" : props?.date?.toString()},<br className="line-break-phone" /> {hoveredPoint.time} <div className={props?.date?.toString() === dayjs().format('DD.MM.YYYY') ? "black-square" : "blue-dot"}></div>
             </div>
           </Typography>
           <div className="weather-card-container">
@@ -73,7 +66,6 @@ const WeatherCard = (props: IMyWeatherData) => {
           <div className="weather-card-text">
           <Typography variant="body1">
             real temp: {props?.temperature_2m[hoveredPoint.index]} °C
-            {/* <br /> */}
           </Typography>
           <Typography color="text.secondary">
             rain: {props?.rain[hoveredPoint.index] * 100} % <br />

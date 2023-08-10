@@ -20,14 +20,7 @@ const WeatherChart = () => {
   console.log(weatherdata?.timeUnits);
 
   const chartRef = useRef(null);
-
-  const [chartWidth, setChartWidth] = useState(800);
   
-  const handleMouseOver = () => {
-    console.log('Mouse over the chart!');
-    // Add custom logic here for when the mouse pointer enters the chart area
-  };
-
   const handleMouseOut = () => {
     if (labelRef.current !== null && labelRef.current.getAttribute('opacity') === '0') {
       console.log('Mouse left the chart.');
@@ -36,17 +29,17 @@ const WeatherChart = () => {
   };
 
   const dataHovered = (hoveredPoint: number) => {
-    // console.log("hovered over:", hoveredPoint);
-    setHoveredPoint({index: hoveredPoint, time: weatherdata?.timeUnits[hoveredPoint]});
+    console.log("actually hovered over:", hoveredPoint + formData.slider[0]);
+    setHoveredPoint({index: hoveredPoint + formData.slider[0], time: weatherdata?.timeUnits[hoveredPoint + formData.slider[0]]});
     // setHoveredPoint(-1);
   }
 
   // console.log(time);
-  const getOptions = (type: any, forecast: any, today: any, timeUnits: any, meta: string, chartWidth: number) => ({
+  const getOptions = (type: any, forecast: any, today: any, timeUnits: any, meta: string) => ({
     chart: {
       type,
-      width: chartWidth,
-      height: 400,
+      maxWidth: 800,
+      // height: 400,
       borderRadius: 10,
       backgroundColor: {
         linearGradient: [-100, -100, -100, 700],
@@ -105,18 +98,37 @@ const WeatherChart = () => {
         },
       },
     ],
+    responsive: {
+      rules: [{
+          condition: {
+              maxWidth: 600
+          },
+          chartOptions: {
+              legend: {
+                  align: 'center',
+                  verticalAlign: 'bottom',
+                  layout: 'horizontal'
+              },
+              yAxis: {
+                  labels: {
+                      align: 'left',
+                      x: 0,
+                      y: -5
+                  },
+                  title: {
+                      text: null
+                  }
+              },
+              subtitle: {
+                  text: null
+              },
+              credits: {
+                  enabled: false
+              }
+          }
+      }]
+  }
   });
-
-  const size = useWindowSize();
-  console.log(size)
-  useEffect(() => {
-    console.log(chartWidth);
-    if (typeof size.width === 'number' && size.width < 820 && size.width > 0) {
-      setChartWidth(size.width - 20)
-    } else {
-      setChartWidth(800)
-    }
-  }, [size])
 
   if (weatherdata !== undefined) {
     return (
@@ -132,8 +144,7 @@ const WeatherChart = () => {
             weatherdata?.forecast?.apparent_temperature?.slice(formData?.slider[0], formData?.slider[1] + 1),
             weatherdata?.today?.apparent_temperature?.slice(formData.slider[0], formData.slider[1] + 1),
             weatherdata?.timeUnits?.slice(formData.slider[0], formData.slider[1] + 1),
-            weatherdata?.meta,
-            chartWidth
+            weatherdata?.meta
           )}
         />
       </div>

@@ -4,6 +4,7 @@ import skydiff from '../../assets/skydiff.png'
 import linkedin from '../../assets/linkedin.png'
 import { blue } from '@mui/material/colors';
 import CustomButton from '../../components-shared/CustomButton';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
 
@@ -28,7 +29,9 @@ const Home = () => {
       With just a few taps, select any date and city worldwide, experiencing the convenience of time travel through weather data. Join me today and stay one step ahead of Mother Nature. Dress appropriately for any weather, anywhere, anytime with the Temperature React App!<br />
       {/* <div> */}
       </Typography>
+      <Link to={`/App`}>
       <CustomButton value="Try it now" myColor={myColor} variant="contained" size="large" className='try-it-button'/>
+      </Link>
       <hr className='separate-line'/>
       <Typography variant="body1" sx={{ textAlign: 'justify' }}>
         About me: I really enjoy working on frontend development and have a strong passion for learning about new technologies in the field. I've gained experience with JavaScript, React, TypeScript, and even SharePoint. I've been fortunate to work with these technologies and have found them quite interesting.

@@ -98,7 +98,7 @@ const Historical = () => {
         );
         setTimeout(() => {
           setIsLoading(false);
-        }, 100000);
+        }, 700);
       });
     } else {
       console.log("error");

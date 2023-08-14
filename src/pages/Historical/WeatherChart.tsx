@@ -1,12 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { State, actionCreators } from "../../state";
-import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { useEffect, useRef, useState } from "react";
+import {  useRef } from "react";
 import { bindActionCreators } from "redux";
-import getOpenWeatherIcon from "../services/GetWeatherIcon";
-import useWindowSize from "../services/GetWindowSize";
 
 const WeatherChart = () => {
   const labelRef = useRef<SVGElement>(null);

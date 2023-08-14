@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { ActionType } from "../action-types";
 import { Action } from "../actions";
 import IHoveredPoint from "../../models/IHoveredPoint";

@@ -1,8 +1,8 @@
 import './App.css'
-import DrawerAppBar from './components/NavBar/NavBar'
+import DrawerAppBar from './components-shared/NavBar'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Home from './components/Home/Home'
-import Historical from './components/Historical/Historical'
+import Home from './pages/Home/Home'
+import Historical from './pages/Historical/Historical'
 
 function App() {
 

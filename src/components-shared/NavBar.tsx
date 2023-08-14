@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { Box, AppBar, CssBaseline, Divider, Drawer, IconButton, ListItem, ListItemButton, ListItemText, Typography, List, Toolbar, styled } from '@mui/material'
+import { Box, AppBar, CssBaseline, Divider, Drawer, IconButton, ListItem, ListItemButton, ListItemText, Typography, List, Toolbar } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu';
-import Button, { ButtonProps } from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import { blue, purple } from '@mui/material/colors';
-import skydiff from '../../assets/skydiff.png'
-import CustomButton from '../Historical/CustomButton';
+import skydiff from '../assets/skydiff.png'
+import CustomButton from './CustomButton';
 
 interface Props {
   /**
@@ -48,15 +46,6 @@ const DrawerAppBar = (props: Props) => {
       </List>
     </Box>
   );
-
-  const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
-    color: theme.palette.getContrastText(blue[500]),
-    backgroundColor: blue[800],
-    "&:hover": {
-      backgroundColor: blue[700]
-    }
-  }));
-
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (

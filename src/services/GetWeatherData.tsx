@@ -1,7 +1,7 @@
 import axios from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
 import { useState } from 'react';
-import IWeatherData from '../../models/IWeatherData';
+import IWeatherData from '../models/IWeatherData';
 
 // https://open-meteo.com/
 // https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m

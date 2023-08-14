@@ -1,26 +1,14 @@
-import { Card, CardMedia, Grid, Typography } from "@mui/material"
-import { lightBlue } from "@mui/material/colors"
-import { useDispatch, useSelector } from 'react-redux/es/exports'
+import { Card, Typography } from "@mui/material"
+import { useSelector } from 'react-redux/es/exports'
 import { State } from "../../state"
 import dayjs from "dayjs";
 import { useRef } from "react";
-import jQuery from "jquery";
-import getOpenWeatherIcon from "../services/GetWeatherIcon";
+import getOpenWeatherIcon from "../../services/GetWeatherIcon";
+import IMyCardWeatherData from "../../models/IMyCardWeatherData";
 
-interface IMyWeatherData {
-  relativehumidity_2m: number[];
-  weathercode: string[];
-  temperature_2m: number[];
-  apparent_temperature: number[];
-  rain: number[];
-  windspeed_10m: number[];
-  date: Date;
-}
-
-const WeatherCard = (props: IMyWeatherData) => {
+const WeatherCard = (props: IMyCardWeatherData) => {
   const hoveredPoint = useSelector((state: State) => state.hoveredPoint)
   const minMaxTemperature = useSelector((state: State) => state.weatherdata.minMax)
-  console.log(props);
 
   const minValue = minMaxTemperature?.minTemperature;
   const maxValue = minMaxTemperature?.maxTemperature;

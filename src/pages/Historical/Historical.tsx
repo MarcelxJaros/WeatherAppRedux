@@ -4,8 +4,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useCallback, useState } from 'react';
 import '../../App.css'
-import getGeoData from '../services/GetGeoData';
-import getWeather from '../services/GetWeatherData';
+import getGeoData from '../../services/GetGeoData';
+import getWeather from '../../services/GetWeatherData';
 import WeatherChart from './WeatherChart';
 import TimeSlider from './TimeSlider';
 import dayjs, { Dayjs } from 'dayjs';
@@ -13,7 +13,7 @@ import { bindActionCreators } from 'redux';
 import { State, actionCreators } from '../../state';
 import { useDispatch, useSelector } from 'react-redux';
 import WeatherCard from './WeatherCard';
-import CustomButton from './CustomButton';
+import CustomButton from '../../components-shared/CustomButton';
 
 const Historical = () => {
 

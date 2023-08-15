@@ -1,4 +1,5 @@
 export default interface IMyWeatherData {
+  city: string;
   relativehumidity_2m: number[];
   weathercode: string[];
   temperature_2m: number[];

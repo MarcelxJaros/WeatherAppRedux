@@ -69,6 +69,7 @@ const Historical = () => {
           {
             forecast:
             {
+              city: city,
               date: date.format('DD.MM.YYYY'),
               time: resultForecast.data.hourly.time,
               temperature_2m: resultForecast.data.hourly.temperature_2m,
@@ -80,6 +81,7 @@ const Historical = () => {
             },
             today:
             {
+              city: city,
               date: dayjs().format('DD.MM.YYYY'),
               time: resultToday.data.hourly.time,
               temperature_2m: resultToday.data.hourly.temperature_2m,

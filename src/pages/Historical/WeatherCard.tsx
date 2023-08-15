@@ -36,7 +36,7 @@ const WeatherCard = (props: IMyCardWeatherData) => {
         <Card className="weather-card" sx={{ backgroundColor: calculateInterpolatedColor(props?.temperature_2m[hoveredPoint.index]) }}>
           <Typography variant="h6" component="div" sx={{ padding: 1 }}>
             <div className="card-heading">
-            Bratislava, <br className="line-break-phone" />{props?.date?.toString() === dayjs().format('DD.MM.YYYY') ? "TODAY" : props?.date?.toString()},<br className="line-break-phone" /> {hoveredPoint.time} <div className={props?.date?.toString() === dayjs().format('DD.MM.YYYY') ? "black-square" : "blue-dot"}></div>
+            {props?.city}, <br className="line-break-phone" />{props?.date?.toString() === dayjs().format('DD.MM.YYYY') ? "TODAY" : props?.date?.toString()},<br className="line-break-phone" /> {hoveredPoint.time} <div className={props?.date?.toString() === dayjs().format('DD.MM.YYYY') ? "black-square" : "blue-dot"}></div>
             </div>
           </Typography>
           <div className="weather-card-container">

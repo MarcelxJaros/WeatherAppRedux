@@ -1,37 +1,25 @@
-import { useDispatch, useSelector } from "react-redux";
-import { State, actionCreators } from "../../state";
+import { useDispatch, useSelector } from 'react-redux';
+import { State, actionCreators } from '../../state';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import {  useRef } from "react";
-import { bindActionCreators } from "redux";
+import { useRef } from 'react';
+import { bindActionCreators } from 'redux';
 
 const WeatherChart = () => {
-  const labelRef = useRef<SVGElement>(null);
+  const formData = useSelector((state: State) => state.formData);
+  const weatherdata = useSelector((state: State) => state.weatherdata);
 
-  const dispatch = useDispatch()
-
-  const { setHoveredPoint } = bindActionCreators(actionCreators, dispatch)
-
-  const formData = useSelector((state: State) => state.formData)
-  const weatherdata = useSelector((state: State) => state.weatherdata)
-  console.log(weatherdata?.timeUnits);
-
-  const chartRef = useRef(null);
-  
-  const handleMouseOut = () => {
-    if (labelRef.current !== null && labelRef.current.getAttribute('opacity') === '0') {
-      console.log('Mouse left the chart.');
-      setHoveredPoint({index: -1, time: ''});
-    }
-  };
+  const dispatch = useDispatch();
+  const { setHoveredPoint } = bindActionCreators(actionCreators, dispatch);
 
   const dataHovered = (hoveredPoint: number) => {
-    console.log("actually hovered over:", hoveredPoint + formData.slider[0]);
-    setHoveredPoint({index: hoveredPoint + formData.slider[0], time: weatherdata?.timeUnits[hoveredPoint + formData.slider[0]]});
-    // setHoveredPoint(-1);
-  }
+    console.log('actually hovered over:', hoveredPoint + formData.slider[0]);
+    setHoveredPoint({
+      index: hoveredPoint + formData.slider[0],
+      time: weatherdata?.timeUnits[hoveredPoint + formData.slider[0]],
+    });
+  };
 
-  // console.log(time);
   const getOptions = (type: any, forecast: any, today: any, timeUnits: any, meta: string) => ({
     chart: {
       type,
@@ -41,17 +29,17 @@ const WeatherChart = () => {
       backgroundColor: {
         linearGradient: [-100, -100, -100, 700],
         stops: [
-            [0, 'rgb(255, 255, 255)'],
-            [1, 'rgb(173, 216, 230)']
-        ]
-    },
+          [0, 'rgb(255, 255, 255)'],
+          [1, 'rgb(173, 216, 230)'],
+        ],
+      },
     },
     title: {
       text: formData.city,
     },
     tooltip: {
       shared: true,
-      crosshairs: { width: 1, color: "black" }
+      crosshairs: { width: 1, color: 'black' },
     },
     yAxis: {
       title: {
@@ -59,7 +47,7 @@ const WeatherChart = () => {
       },
     },
     xAxis: {
-      categories: timeUnits
+      categories: timeUnits,
     },
     series: [
       {
@@ -73,7 +61,7 @@ const WeatherChart = () => {
         point: {
           events: {
             mouseOver: function (this: any) {
-              dataHovered(this.x)
+              dataHovered(this.x);
             },
           },
         },
@@ -89,68 +77,68 @@ const WeatherChart = () => {
         point: {
           events: {
             mouseOver: function (this: any) {
-              dataHovered(this.x)
+              dataHovered(this.x);
             },
           },
         },
       },
     ],
     responsive: {
-      rules: [{
+      rules: [
+        {
           condition: {
-              maxWidth: 600
+            maxWidth: 600,
           },
           chartOptions: {
-              legend: {
-                  align: 'center',
-                  verticalAlign: 'bottom',
-                  layout: 'horizontal'
+            legend: {
+              align: 'center',
+              verticalAlign: 'bottom',
+              layout: 'horizontal',
+            },
+            yAxis: {
+              labels: {
+                align: 'left',
+                x: 0,
+                y: -5,
               },
-              yAxis: {
-                  labels: {
-                      align: 'left',
-                      x: 0,
-                      y: -5
-                  },
-                  title: {
-                      text: null
-                  }
+              title: {
+                text: null,
               },
-              subtitle: {
-                  text: null
-              },
-              credits: {
-                  enabled: false
-              }
-          }
-      }]
-  }
+            },
+            subtitle: {
+              text: null,
+            },
+            credits: {
+              enabled: false,
+            },
+          },
+        },
+      ],
+    },
   });
 
   if (weatherdata !== undefined) {
     return (
-      <div
-        // onMouseOver={handleMouseOver}
-        onMouseOut={handleMouseOut}
-      >
-        <HighchartsReact
-          ref={chartRef}
-          highcharts={Highcharts}
-          options={getOptions(
-            'spline',
-            weatherdata?.forecast?.apparent_temperature?.slice(formData?.slider[0], formData?.slider[1] + 1),
-            weatherdata?.today?.apparent_temperature?.slice(formData.slider[0], formData.slider[1] + 1),
-            weatherdata?.timeUnits?.slice(formData.slider[0], formData.slider[1] + 1),
-            weatherdata?.meta
-          )}
-        />
-      </div>
-    )
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={getOptions(
+          'spline',
+          weatherdata?.forecast?.apparent_temperature?.slice(
+            formData?.slider[0],
+            formData?.slider[1] + 1
+          ),
+          weatherdata?.today?.apparent_temperature?.slice(
+            formData.slider[0],
+            formData.slider[1] + 1
+          ),
+          weatherdata?.timeUnits?.slice(formData.slider[0], formData.slider[1] + 1),
+          weatherdata?.meta
+        )}
+      />
+    );
   } else {
-    return <></>
+    return <></>;
   }
-
-
-}
+};
 
 export default WeatherChart;

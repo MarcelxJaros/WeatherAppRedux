@@ -1,4 +1,4 @@
-export default interface IWeatherData {
+export default interface IWeatherDataApi {
   latitude: number;
   longitude: number;
   generationtime_ms: number;

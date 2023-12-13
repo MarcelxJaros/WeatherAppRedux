@@ -1,13 +1,13 @@
 interface WeatherHourlyData {
   city: string;
   date: string;
-  time: string[];
-  temperature_2m: number[];
-  apparent_temperature: number[];
-  rain: number[];
-  windspeed_10m: number[];
-  relativehumidity_2m: number[];
-  weathercode: number[];
+  time: string[] | undefined;
+  temperature_2m: number[] | undefined;
+  apparent_temperature: number[] | undefined;
+  rain: number[] | undefined;
+  windspeed_10m: number[] | undefined;
+  relativehumidity_2m: number[] | undefined;
+  weathercode: number[] | undefined;
 }
 
 interface WeatherMinMax {

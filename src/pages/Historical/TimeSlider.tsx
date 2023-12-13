@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import Slider from '@mui/material/Slider';
-import { useSelector } from "react-redux";
-import { State } from "../../state";
+import { useSelector } from 'react-redux';
+import { State } from '../../state';
 // https://mui.com/material-ui/react-slider/
-import "@mui/material/styles/createPalette";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-declare module "@mui/material/styles/createPalette" {
+import '@mui/material/styles/createPalette';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+declare module '@mui/material/styles/createPalette' {
   interface Palette {
     brown: PaletteColor;
   }
@@ -14,7 +14,7 @@ declare module "@mui/material/styles/createPalette" {
   }
 }
 
-declare module "@mui/material/Slider" {
+declare module '@mui/material/Slider' {
   interface SliderPropsColorOverrides {
     brown: true;
   }
@@ -25,20 +25,20 @@ const theme = createTheme({
   palette: {
     brown: defaultTheme.palette.augmentColor({
       color: {
-        main: '#ADD8E6'
+        main: '#ADD8E6',
       },
-      name: "brown"
-    })
-  }
+      name: 'brown',
+    }),
+  },
 });
 
 interface TimeSliderProps {
   handleSliderChange: (values: number[]) => void;
 }
 
-const TimeSlider = ({handleSliderChange}: TimeSliderProps) => {
+const TimeSlider = ({ handleSliderChange }: TimeSliderProps) => {
   const minDistance = 3;
-  const formData = useSelector((state: State) => state.formData)
+  const formData = useSelector((state: State) => state.formData);
   const [value, setValue] = useState<number[]>(formData?.slider || [0, 23]);
   // console.log(value);
 
@@ -47,14 +47,10 @@ const TimeSlider = ({handleSliderChange}: TimeSliderProps) => {
   }
 
   useEffect(() => {
-    handleSliderChange(value)
-  }, [value])
+    handleSliderChange(value);
+  }, [value]);
 
-  const handleChange = (
-    event: Event,
-    newValue: number | number[],
-    activeThumb: number,
-  ) => {
+  const handleChange = (event: Event, newValue: number | number[], activeThumb: number) => {
     if (!Array.isArray(newValue)) {
       return;
     }
@@ -72,26 +68,24 @@ const TimeSlider = ({handleSliderChange}: TimeSliderProps) => {
     }
   };
   return (
-    <div style={{marginLeft: "24px", marginRight: "24px"}}>
+    <div className="slider-container">
       <ThemeProvider theme={theme}>
-
-      <Slider
-        getAriaLabel={() => 'Choose time frame'}
-        value={value}
-        onChange={handleChange}
-        valueLabelDisplay="auto"
-        getAriaValueText={valuetext}
-        disableSwap
-        step={1}
-        marks
-        min={0}
-        max={23}
-        color="brown"
+        <Slider
+          getAriaLabel={() => 'Choose time frame'}
+          value={value}
+          onChange={handleChange}
+          valueLabelDisplay="auto"
+          getAriaValueText={valuetext}
+          disableSwap
+          step={1}
+          marks
+          min={0}
+          max={23}
+          color="brown"
         />
-        </ThemeProvider>
-
+      </ThemeProvider>
     </div>
-  )
-}
+  );
+};
 
 export default TimeSlider;

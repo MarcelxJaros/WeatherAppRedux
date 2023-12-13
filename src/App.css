@@ -15,7 +15,7 @@ body {
 }
 
 body {
-  position: relative
+  position: relative;
 }
 
 /* -------------------------- NAVIGATION -------------------------- */
@@ -162,12 +162,16 @@ a:hover {
   flex-direction: row;
   justify-content: space-between;
   gap: 16px;
-  margin: 16px 8px 0 8px;
+  margin: 16px 8px 2px 8px;
+}
+
+.slider-container {
+  margin: 0 24px;
 }
 
 .weather-cards-container {
   display: 'flex';
-  justify-content: 'center'
+  justify-content: 'center';
 }
 
 .weather-card-container {
@@ -188,7 +192,7 @@ a:hover {
 
 .weather-card-img {
   height: 100px;
-  width: 100px
+  width: 100px;
 }
 
 .degree-text {
@@ -271,7 +275,6 @@ a:hover {
   margin: 0 4px;
 }
 
-
 /* -------------------------- RESPONSIVE STYLES -------------------------- */
 @media only screen and (max-width: 800px) {
   .home-container {
@@ -327,7 +330,7 @@ a:hover {
 
   .hero-container {
     flex-direction: column-reverse;
-    gap: 40px
+    gap: 40px;
   }
 }
 

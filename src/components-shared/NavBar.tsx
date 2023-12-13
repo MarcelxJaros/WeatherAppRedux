@@ -1,8 +1,21 @@
 import * as React from 'react';
-import { Box, AppBar, CssBaseline, Divider, Drawer, IconButton, ListItem, ListItemButton, ListItemText, Typography, List, Toolbar } from '@mui/material'
+import CssBaseline from '@mui/material/CssBaseline';
+import {
+  Box,
+  AppBar,
+  Divider,
+  Drawer,
+  IconButton,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Typography,
+  List,
+  Toolbar,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
-import skydiff from '../assets/skydiff.png'
+import skydiff from '../assets/skydiff.png';
 import CustomButton from './CustomButton';
 
 interface Props {
@@ -16,8 +29,9 @@ interface Props {
 const drawerWidth = 240;
 const navItems = ['Home', 'App'];
 const myColor = {
-  color: '#697f98', hover: '#697f98'
-}
+  color: '#697f98',
+  hover: '#697f98',
+};
 
 const DrawerAppBar = (props: Props) => {
   const { window } = props;
@@ -35,13 +49,13 @@ const DrawerAppBar = (props: Props) => {
       <Divider />
       <List>
         {navItems.map((item) => (
-            <Link key={item} to={`/${item}`}>
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-            </Link>
+          <Link key={item} to={`/${item}`}>
+            <ListItem key={item} disablePadding>
+              <ListItemButton sx={{ textAlign: 'center' }}>
+                <ListItemText primary={item} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
     </Box>
@@ -49,10 +63,10 @@ const DrawerAppBar = (props: Props) => {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex', height: "64px" }}>
+    <Box sx={{ display: 'flex', height: '64px' }}>
       <CssBaseline />
-      <div className='nav-items'>
-        <AppBar component="nav" position="absolute" className='nav-bar'>
+      <div className="nav-items">
+        <AppBar component="nav" position="absolute" className="nav-bar">
           <Toolbar>
             <IconButton
               color="inherit"
@@ -64,32 +78,28 @@ const DrawerAppBar = (props: Props) => {
               <MenuIcon />
             </IconButton>
 
-
-            <Typography
-              variant="h6"
-              component="div"
-              className='nav-item-typography'
-            >
-              <div className='nav-item left'>
-                SkyDiff
+            <Typography variant="h6" component="div" className="nav-item-typography">
+              <div className="nav-item left">SkyDiff</div>
+              <div className="nav-item center">
+                <img className="nav-logo" src={skydiff} alt="Logo" />
               </div>
-              <div className='nav-item center'>
-                <img className='nav-logo' src={skydiff} alt="Logo" />
-              </div>
-              <Box className='nav-item right'>
+              <Box className="nav-item right">
                 {navItems.map((item) => (
                   <Link key={item} to={`/${item}`}>
                     {/* <ColorButton className="nav-button" key={item} variant="contained" size="large">
                       {item}
                     </ColorButton> */}
-                    <CustomButton value={item} className="nav-button" myColor={myColor} variant="contained" size="large">
-                      
-                    </CustomButton>
+                    <CustomButton
+                      value={item}
+                      className="nav-button"
+                      mycolor={myColor}
+                      variant="contained"
+                      size="large"
+                    ></CustomButton>
                   </Link>
                 ))}
               </Box>
             </Typography>
-
           </Toolbar>
         </AppBar>
       </div>
@@ -115,6 +125,6 @@ const DrawerAppBar = (props: Props) => {
       </Box>
     </Box>
   );
-}
+};
 
 export default DrawerAppBar;

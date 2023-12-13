@@ -1,6 +1,5 @@
 import axios from 'axios';
 import dayjs, { Dayjs } from 'dayjs';
-import { useState } from 'react';
 import IWeatherData from '../models/IWeatherDataApi';
 
 // https://open-meteo.com/

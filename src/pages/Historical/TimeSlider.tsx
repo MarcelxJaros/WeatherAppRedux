@@ -40,7 +40,6 @@ const TimeSlider = ({ handleSliderChange }: TimeSliderProps) => {
   const minDistance = 3;
   const formData = useSelector((state: State) => state.formData);
   const [value, setValue] = useState<number[]>(formData?.slider || [0, 23]);
-  // console.log(value);
 
   function valuetext(value: number) {
     return `${value}`;
@@ -49,7 +48,18 @@ const TimeSlider = ({ handleSliderChange }: TimeSliderProps) => {
   useEffect(() => {
     handleSliderChange(value);
   }, [value]);
+  
+  /*
+    The handleChange function is a handler for the onChange event of a slider component.
+    It ensures that the selected time range on the slider adheres to a minimum distance constraint.
 
+    The function takes the event, newValue (slider values), and activeThumb (index of the active thumb) as parameters.
+    If newValue is not an array, the function returns early. Otherwise, it checks if the difference between
+    the selected range is less than the specified minDistance.
+
+    If the range is too small, the function adjusts the values to maintain the minimum distance constraint.
+    It clamps the values based on the activeThumb and updates the slider accordingly.
+  */
   const handleChange = (event: Event, newValue: number | number[], activeThumb: number) => {
     if (!Array.isArray(newValue)) {
       return;

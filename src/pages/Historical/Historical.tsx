@@ -14,10 +14,8 @@ import { State, actionCreators } from '../../state';
 import { useDispatch, useSelector } from 'react-redux';
 import WeatherCard from './WeatherCard';
 import CustomButton from '../../components-shared/CustomButton';
-// import MyModal from './Modal';
 
 const Historical = () => {
-  const [openModal, setOpenModal] = useState(false);
   const dispatch = useDispatch();
   const { setFormData, setWeatherData } = bindActionCreators(actionCreators, dispatch);
 
@@ -40,17 +38,17 @@ const Historical = () => {
     setFormData({ city: formData.city, date: formData.date, slider: values });
   };
 
-  const handleClose = () => {
-    setOpenModal(false);
-  };
-  const handleOpen = () => {
-    setOpenModal(true);
-  };
+  /*
+    This handleClick function is a debounced callback intended for user interactions.
+    It triggers a series of asynchronous operations to fetch weather data based on the selected city and date.
 
-  // const handleClick = () => {
-  //   handleOpen();
-  // };
+    The function handles loading state, sets form data, and retrieves geographical coordinates.
+    It then fetches weather data for both the selected date and the current date, processes the information,
+    and sets the processed weather data in the component state.
 
+    If errors occur during the data fetching process, they are logged. Finally, loading state is set to false
+    after a delay for a smoother user experience.
+  */
   const handleClick = useCallback(
     debounce(() => {
       setIsLoading(true);
@@ -67,8 +65,6 @@ const Historical = () => {
               }),
               getWeather({ lon: coordinates.data[0].lon, lat: coordinates.data[0].lat }),
             ]);
-
-            // Do something with resultForecast and resultToday
 
             console.log('full weather data:', resultForecast);
 
@@ -168,7 +164,6 @@ const Historical = () => {
           <></>
         )}
       </div>
-      {/* <MyModal open={open} handleOpen={handleOpen} onClose={handleClose} /> */}
     </div>
   );
 };

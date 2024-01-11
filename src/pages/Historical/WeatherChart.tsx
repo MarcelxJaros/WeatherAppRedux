@@ -13,13 +13,13 @@ const WeatherChart = () => {
   const { setHoveredPoint } = bindActionCreators(actionCreators, dispatch);
 
   const dataHovered = (hoveredPoint: number) => {
-    console.log('actually hovered over:', hoveredPoint + formData.slider[0]);
     setHoveredPoint({
       index: hoveredPoint + formData.slider[0],
       time: weatherdata?.timeUnits[hoveredPoint + formData.slider[0]],
     });
   };
 
+  // The getOptions function generates configuration options for a Highcharts chart based on the provided parameters.
   const getOptions = (type: any, forecast: any, today: any, timeUnits: any, meta: string) => ({
     chart: {
       type,
